@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.easychat.mapper.MessageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.easychat.data.entity.Message">
+        <result column="id" property="id" />
+        <result column="sender_id" property="senderId" />
+        <result column="receiver_id" property="receiverId" />
+        <result column="send_time" property="sendTime" />
+        <result column="message_type" property="messageType" />
+        <result column="chat_type" property="chatType" />
+        <result column="content" property="content" />
+        <result column="seen" property="seen" />
+    </resultMap>
+
+    <resultMap id="LatestMessageMap" type="com.example.easychat.data.vo.LatestMessage">
+        <result column="sender_id" property="senderId" />
+        <result column="nickname" property="nickname" />
+        <result column="head_url" property="headUrl" />
+        <result column="send_time" property="sendTime" />
+        <result column="message_type" property="messageType" />
+        <result column="chat_type" property="chatType" />
+        <result column="content" property="content" />
+        <result column="unread" property="unread" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        sender_id, receiver_id, send_time, message_type, chat_type, content, seen
+    </sql>
+
+    <select id="getLatestMessages" parameterType="java.lang.Integer" resultMap="LatestMessageMap">
+        (SELECT m.sender_id, user.nickname, user.head_url, m.send_time, m.message_type, m.chat_type, m.content,
+        latest.unread FROM message m JOIN (
+            SELECT sender_id, MAX(send_time) AS max_send_time, COUNT(*) AS unread FROM message
+            WHERE receiver_id = #{receiverId} AND message_type=1 AND seen = 0 GROUP BY sender_id
+        ) AS latest JOIN user
+        ON m.sender_id = latest.sender_id AND m.send_time = latest.max_send_time AND m.sender_id = user.id
+        WHERE m.receiver_id = #{receiverId} AND message_type=1 AND seen = 0)
+        UNION ALL
+        (SELECT m.sender_id, `group`.`name` AS nickname, `group`.head_url, m.send_time, m.message_type, m.chat_type,
+        m.content, latest.unread FROM message m JOIN (
+            SELECT sender_id, MAX(send_time) AS max_send_time, COUNT(*) AS unread FROM message
+            WHERE receiver_id = #{receiverId} AND message_type=2 AND seen = 0 GROUP BY sender_id
+        ) AS latest JOIN `group`
+        ON m.sender_id = latest.sender_id AND m.send_time = latest.max_send_time AND m.sender_id = `group`.id
+        WHERE m.receiver_id = #{receiverId} AND message_type=2 AND seen = 0)
+        ORDER BY send_time DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.easychat.mapper.GroupMemberMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.easychat.data.entity.GroupMember">
+        <result column="group_id" property="groupId" />
+        <result column="member_id" property="memberId" />
+        <result column="nickname" property="nickname" />
+        <result column="note" property="note" />
+        <result column="role" property="role" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        group_id, member_id, nickname, note, role
+    </sql>
+
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.easychat.mapper.GroupMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.easychat.data.entity.Group">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="head_url" property="headUrl" />
+        <result column="introduction" property="introduction" />
+        <result column="announcement" property="announcement" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <resultMap id="GroupInfoMap" type="com.example.easychat.data.vo.GroupInfo">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="head_url" property="headUrl" />
+        <result column="nickname" property="nickname" />
+        <result column="note" property="note" />
+        <result column="role" property="role" />
+        <result column="introduction" property="introduction" />
+        <result column="announcement" property="announcement" />
+        <result column="number" property="number" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        name, head_url, introduction, announcement, create_time
+    </sql>
+
+    <select id="getGroupInfo" parameterType="com.example.easychat.data.dto.We"  resultMap="GroupInfoMap">
+        SELECT id,`name`,head_url,nickname, note,`role`,introduction,announcement,gm.`number` FROM `group`,group_member
+        JOIN (SELECT COUNT(*) AS `number` FROM group_member where group_id=#{you}) AS gm
+        WHERE id=#{i} AND group_id=#{you} AND member_id=id
+    </select>
+
+</mapper>
