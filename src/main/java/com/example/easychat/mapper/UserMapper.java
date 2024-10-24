@@ -5,7 +5,7 @@ import com.example.easychat.data.dto.Register;
 import com.example.easychat.data.dto.We;
 import com.example.easychat.data.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.example.easychat.data.vo.SingleInfo;
+import com.example.easychat.data.vo.PersonalInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -25,6 +25,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     void insert(Register register);
 
-    SingleInfo getSingleInfo(We we);
+    PersonalInfo getPersonalInfo(We we);
 
 }

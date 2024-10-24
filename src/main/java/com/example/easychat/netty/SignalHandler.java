@@ -14,7 +14,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class MessageHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class SignalHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
     public static ChannelGroup users = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
@@ -29,6 +29,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<TextWebSocketFra
         if (webSocketSignal != null ) {
             Integer signalType = webSocketSignal.getSignalType();
             String content = webSocketSignal.getContent();
+
             if (Objects.equals(signalType, WebSocketSignal.FIRST_CONNECTION)) {
                 manager.put(Integer.parseInt(content), ctx.channel());
                 log.info(content);
@@ -37,13 +38,28 @@ public class MessageHandler extends SimpleChannelInboundHandler<TextWebSocketFra
                 log.info(content);
                 WebSocketSignal.Chat chat = JsonUtil.jsonToObject(content, WebSocketSignal.Chat.class);
                 if (chat != null) {
-                    log.info(String.valueOf(chat.getSendTime()));
-                    if(manager.containsKey(chat.getReceiverId()))
-                        manager.get(chat.getReceiverId()).writeAndFlush(signal);
+                    if(manager.containsKey(chat.getReceiverId())) {
+                        manager.get(chat.getReceiverId()).writeAndFlush(new TextWebSocketFrame(signal));
+                    }
+
                 }
             }
             else if(Objects.equals(signalType, WebSocketSignal.DISCONNECTION)) {
                 manager.remove(Integer.parseInt(content));
+            }
+            else if(Objects.equals(signalType, WebSocketSignal.REQUEST_PEER_ID)) {
+                log.info(content);
+                WebSocketSignal.Call call = JsonUtil.jsonToObject(content, WebSocketSignal.Call.class);
+                if (call != null) {
+                    manager.get(call.getCalleeId()).writeAndFlush(new TextWebSocketFrame(signal));
+                }
+            }
+            else if(Objects.equals(signalType, WebSocketSignal.SEND_PEER_ID)) {
+                log.info(content);
+                WebSocketSignal.Peer peer = JsonUtil.jsonToObject(content, WebSocketSignal.Peer.class);
+                if (peer != null) {
+                    manager.get(peer.getCallerId()).writeAndFlush(new TextWebSocketFrame(signal));
+                }
             }
         }
 

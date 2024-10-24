@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SingleInfo implements Serializable {
+public class PersonalInfo implements Serializable {
 
     private Integer id;
     private String nickname;

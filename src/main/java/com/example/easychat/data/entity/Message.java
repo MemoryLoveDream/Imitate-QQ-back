@@ -33,6 +33,9 @@ public class Message implements Serializable {
     @TableField("receiver_id")
     private Integer receiverId;
 
+    @TableField("group_id")
+    private Integer groupId;
+
     @TableField("send_time")
     private LocalDateTime sendTime;
 

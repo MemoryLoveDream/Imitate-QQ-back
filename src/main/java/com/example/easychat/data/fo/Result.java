@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -46,6 +47,11 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> depends(T data) {
         if (data != null) return Result.success(data);
+        else return Result.error(500);
+    }
+
+    public static <T> Result<List<T>> depends(List<T> list) {
+        if (!list.isEmpty()) return Result.success(list);
         else return Result.error(500);
     }
 

@@ -1,7 +1,10 @@
 package com.example.easychat.service.impl;
 
+import com.example.easychat.data.dto.We;
+import com.example.easychat.data.dto.We3;
 import com.example.easychat.data.entity.Message;
 import com.example.easychat.data.vo.LatestMessage;
+import com.example.easychat.data.vo.NewMessage;
 import com.example.easychat.mapper.MessageMapper;
 import com.example.easychat.service.IMessageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -28,4 +31,18 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     public List<LatestMessage> getLatestMessages(Integer receiverId) {
         return messageMapper.getLatestMessages(receiverId);
     }
+
+    @Override
+    public List<NewMessage> getNewMessages(Integer receiverId) {
+        List<NewMessage> newMessages =messageMapper.getNewMessages(receiverId);
+        if(newMessages != null) {
+            for(NewMessage newMessage: newMessages) {
+                if (newMessage.getMessageType() == 1)
+                    newMessage.setChats(messageMapper.getPersonChats(new We(receiverId ,newMessage.getId())));
+                else newMessage.setChats(messageMapper.getGroupChats(new We(receiverId, newMessage.getId())));
+            }
+        }
+        return newMessages;
+    }
+
 }

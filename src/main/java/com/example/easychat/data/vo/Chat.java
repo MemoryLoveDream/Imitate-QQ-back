@@ -1,5 +1,6 @@
 package com.example.easychat.data.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,16 +11,14 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LatestMessage implements Serializable {
+public class Chat implements Serializable {
 
-    private Integer senderId;
-    private Integer groupId;
-    private String nickname;
-    private String headUrl;
-    private LocalDateTime sendTime;
-    private Integer messageType;
+    @TableField("chat_type")
     private Integer chatType;
+    @TableField("sender_id")
+    private Integer senderId;
+    @TableField("send_time")
+    private LocalDateTime sendTime;
     private String content;
-    private Integer unread;
 
 }

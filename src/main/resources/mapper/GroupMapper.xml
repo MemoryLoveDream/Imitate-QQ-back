@@ -33,7 +33,7 @@
     <select id="getGroupInfo" parameterType="com.example.easychat.data.dto.We"  resultMap="GroupInfoMap">
         SELECT id,`name`,head_url,nickname, note,`role`,introduction,announcement,gm.`number` FROM `group`,group_member
         JOIN (SELECT COUNT(*) AS `number` FROM group_member where group_id=#{you}) AS gm
-        WHERE id=#{i} AND group_id=#{you} AND member_id=id
+        WHERE id=#{you} AND member_id=#{i} AND group_id=id
     </select>
 
 </mapper>

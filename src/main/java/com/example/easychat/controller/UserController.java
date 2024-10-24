@@ -5,7 +5,7 @@ import com.example.easychat.data.dto.Register;
 import com.example.easychat.data.dto.Login;
 import com.example.easychat.data.fo.Result;
 import com.example.easychat.data.dto.We;
-import com.example.easychat.data.vo.SingleInfo;
+import com.example.easychat.data.vo.PersonalInfo;
 import com.example.easychat.data.vo.UserInfo;
 import com.example.easychat.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +33,9 @@ public class UserController {
         return Result.depends(BeanUtil.copyProperties(userService.getById(id), UserInfo.class));
     }
 
-    @RequestMapping("single_info")
-    public Result<SingleInfo> singleInfo(@RequestBody We we) {
-        return Result.depends(userService.getSingleInfo(we));
+    @RequestMapping("personal_info")
+    public Result<PersonalInfo> personalInfo(@RequestBody We we) {
+        return Result.depends(userService.getPersonalInfo(we));
     }
 
 }

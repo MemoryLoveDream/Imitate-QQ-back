@@ -30,8 +30,10 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
     @Override
     public GroupInfo getGroupInfo(We we) {
         GroupInfo groupInfo = groupMapper.getGroupInfo(we);
-        groupInfo.setLeaderHeadUrl(groupMemberMapper.getLeaderHeadUrl(we.getYou()));
-        groupInfo.setMemberHeadUrls(groupMemberMapper.getMemberHeadUrls(we.getYou()));
+        if(groupInfo != null) {
+            groupInfo.setLeaderHeadUrl(groupMemberMapper.getLeaderHeadUrl(we.getYou()));
+            groupInfo.setMemberHeadUrls(groupMemberMapper.getMemberHeadUrls(we.getYou()));
+        }
         return groupInfo;
     }
 

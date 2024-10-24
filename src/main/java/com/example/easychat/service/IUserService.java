@@ -5,7 +5,7 @@ import com.example.easychat.data.dto.Register;
 import com.example.easychat.data.dto.We;
 import com.example.easychat.data.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.easychat.data.vo.SingleInfo;
+import com.example.easychat.data.vo.PersonalInfo;
 
 /**
  * <p>
@@ -21,6 +21,6 @@ public interface IUserService extends IService<User> {
 
     Integer register(Register register);
 
-    SingleInfo getSingleInfo(We we);
+    PersonalInfo getPersonalInfo(We we);
 
 }

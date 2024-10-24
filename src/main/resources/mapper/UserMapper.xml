@@ -19,7 +19,7 @@
         <result column="last_off_time" property="lastOffTime" />
     </resultMap>
 
-    <resultMap id="SingleInfoMap" type="com.example.easychat.data.vo.SingleInfo">
+    <resultMap id="PersonalInfoMap" type="com.example.easychat.data.vo.PersonalInfo">
         <result column="id" property="id" />
         <result column="head_url" property="headUrl" />
         <result column="nickname" property="nickname" />
@@ -48,7 +48,7 @@
     </insert>
 
 
-    <select id="getSingleInfo" parameterType="com.example.easychat.data.dto.We"  resultMap="SingleInfoMap">
+    <select id="getPersonalInfo" parameterType="com.example.easychat.data.dto.We"  resultMap="PersonalInfoMap">
         select u.id,u.head_url,u.nickname,u.email,u.sex,u.signature,u.country,u.location,u.status,
                r.note as note,r.`grouping` as `grouping` from user u,relationship r where u.id = r.you and r.i = #{i} and r.you = #{you}
     </select>

@@ -1,11 +1,10 @@
 package com.example.easychat.service.impl;
 
-import cn.hutool.core.util.ObjectUtil;
 import com.example.easychat.data.dto.Login;
 import com.example.easychat.data.dto.Register;
 import com.example.easychat.data.dto.We;
 import com.example.easychat.data.entity.User;
-import com.example.easychat.data.vo.SingleInfo;
+import com.example.easychat.data.vo.PersonalInfo;
 import com.example.easychat.mapper.UserMapper;
 import com.example.easychat.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -37,8 +36,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return register.getId();
     }
 
-    public SingleInfo getSingleInfo(We we) {
-        return userMapper.getSingleInfo(we);
+    public PersonalInfo getPersonalInfo(We we) {
+        return userMapper.getPersonalInfo(we);
     }
 
 }

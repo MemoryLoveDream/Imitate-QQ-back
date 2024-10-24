@@ -49,7 +49,7 @@ public class WSServer {
                         //pipeline.addLast(new HeartBeatHandler());
                         // ====================== 以下是支持httpWebsocket ======================
                         pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
-                        pipeline.addLast(new MessageHandler());
+                        pipeline.addLast(new SignalHandler());
                     }
                 });
     }

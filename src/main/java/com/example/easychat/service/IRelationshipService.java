@@ -3,6 +3,7 @@ package com.example.easychat.service;
 import com.example.easychat.data.dto.OneNewValue;
 import com.example.easychat.data.entity.Relationship;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.easychat.data.vo.PersonalGrouping;
 
 import java.util.List;
 
@@ -16,10 +17,12 @@ import java.util.List;
  */
 public interface IRelationshipService extends IService<Relationship> {
 
-    List<String> getSingleGroupingTypes(Integer id);
+    List<String> getPersonalGroupingTypes(Integer id);
 
     Boolean updateNote(OneNewValue oneNewValue);
 
     Boolean updateGrouping(OneNewValue oneNewValue);
+
+    List<PersonalGrouping> getPersonalGrouping(Integer id);
 
 }

@@ -7,6 +7,7 @@
         <result column="id" property="id" />
         <result column="sender_id" property="senderId" />
         <result column="receiver_id" property="receiverId" />
+        <result column="group_id" property="groupId" />
         <result column="send_time" property="sendTime" />
         <result column="message_type" property="messageType" />
         <result column="chat_type" property="chatType" />
@@ -16,6 +17,7 @@
 
     <resultMap id="LatestMessageMap" type="com.example.easychat.data.vo.LatestMessage">
         <result column="sender_id" property="senderId" />
+        <result column="group_id" property="groupId" />
         <result column="nickname" property="nickname" />
         <result column="head_url" property="headUrl" />
         <result column="send_time" property="sendTime" />
@@ -27,26 +29,54 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        sender_id, receiver_id, send_time, message_type, chat_type, content, seen
+        sender_id, receiver_id, group_id, send_time, message_type, chat_type, content, seen
     </sql>
 
     <select id="getLatestMessages" parameterType="java.lang.Integer" resultMap="LatestMessageMap">
-        (SELECT m.sender_id, user.nickname, user.head_url, m.send_time, m.message_type, m.chat_type, m.content,
-        latest.unread FROM message m JOIN (
+        (SELECT m.sender_id, m.group_id, user.nickname, user.head_url, m.send_time, m.message_type, m.chat_type,
+        m.content, latest.unread FROM message m JOIN (
             SELECT sender_id, MAX(send_time) AS max_send_time, COUNT(*) AS unread FROM message
             WHERE receiver_id = #{receiverId} AND message_type=1 AND seen = 0 GROUP BY sender_id
         ) AS latest JOIN user
         ON m.sender_id = latest.sender_id AND m.send_time = latest.max_send_time AND m.sender_id = user.id
         WHERE m.receiver_id = #{receiverId} AND message_type=1 AND seen = 0)
         UNION ALL
-        (SELECT m.sender_id, `group`.`name` AS nickname, `group`.head_url, m.send_time, m.message_type, m.chat_type,
-        m.content, latest.unread FROM message m JOIN (
-            SELECT sender_id, MAX(send_time) AS max_send_time, COUNT(*) AS unread FROM message
+        (SELECT m.sender_id, m.group_id, `group`.`name` AS nickname, `group`.head_url, m.send_time, m.message_type,
+        m.chat_type, m.content, latest.unread FROM message m JOIN (
+            SELECT group_id, MAX(send_time) AS max_send_time, COUNT(*) AS unread FROM message
             WHERE receiver_id = #{receiverId} AND message_type=2 AND seen = 0 GROUP BY sender_id
         ) AS latest JOIN `group`
-        ON m.sender_id = latest.sender_id AND m.send_time = latest.max_send_time AND m.sender_id = `group`.id
+        ON m.group_id = latest.group_id AND m.send_time = latest.max_send_time AND m.group_id = `group`.id
         WHERE m.receiver_id = #{receiverId} AND message_type=2 AND seen = 0)
         ORDER BY send_time DESC
+    </select>
+
+    <select id="getNewMessages" parameterType="java.lang.Integer"
+            resultType="com.example.easychat.data.vo.NewMessage">
+        (SELECT m.message_type, m.sender_id AS id, m.send_time, latest.unread FROM message m JOIN (
+            SELECT sender_id, MAX(send_time) AS max_send_time, COUNT(*) AS unread FROM message
+            WHERE receiver_id = #{receiverId} AND message_type=1 AND seen = 0 GROUP BY sender_id
+        ) AS latest ON m.sender_id = latest.sender_id AND m.send_time = latest.max_send_time
+         WHERE m.receiver_id = #{receiverId} AND message_type=1 AND seen = 0)
+        UNION ALL
+        (SELECT m.message_type, m.group_id AS id, m.send_time, latest.unread FROM message m JOIN (
+            SELECT group_id, MAX(send_time) AS max_send_time, COUNT(*) AS unread FROM message
+            WHERE receiver_id = #{receiverId} AND message_type=2 AND seen = 0 GROUP BY group_id
+        ) AS latest ON m.group_id = latest.group_id AND m.send_time = latest.max_send_time
+         WHERE m.receiver_id = #{receiverId} AND message_type=2 AND seen = 0)
+        ORDER BY send_time DESC
+    </select>
+
+    <select id="getPersonChats" parameterType="com.example.easychat.data.dto.We"
+            resultType="com.example.easychat.data.vo.Chat">
+        SELECT chat_type, sender_id, send_time, content FROM message WHERE message_type=1
+        AND receiver_id=#{i} AND sender_id=#{you}
+    </select>
+
+    <select id="getGroupChats" parameterType="com.example.easychat.data.dto.We"
+            resultType="com.example.easychat.data.vo.Chat">
+        SELECT chat_type, sender_id, send_time, content FROM message WHERE message_type=2
+        AND receiver_id=#{i} AND group_id=#{you}
     </select>
 
 </mapper>

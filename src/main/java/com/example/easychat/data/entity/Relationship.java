@@ -30,9 +30,6 @@ public class Relationship implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @TableId("id")
-    private Integer id;
-
     @TableField("i")
     private Integer i;
 
