@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Login implements Serializable {
 
-    private Integer id;
-    private String  password;
+    private String id;
+    private String password;
 
 }

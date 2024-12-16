@@ -19,7 +19,7 @@ public interface IUserService extends IService<User> {
 
     boolean login(Login login);
 
-    Integer register(Register register);
+    boolean register(Register register);
 
     PersonalInfo getPersonalInfo(We we);
 

@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +20,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("private_message")
-@ApiModel(value = "PrivateMessage对象", description = "")
 public class Message implements Serializable {
 
     @Serial

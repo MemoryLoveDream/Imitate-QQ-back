@@ -8,8 +8,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -25,7 +23,6 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @TableName("group")
-@ApiModel(value = "Group对象", description = "")
 public class Group implements Serializable {
 
     @Serial

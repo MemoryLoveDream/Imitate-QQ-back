@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serial;
 import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -23,7 +21,6 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @TableName("group_member")
-@ApiModel(value = "GroupMember对象", description = "")
 public class GroupMember implements Serializable {
 
     @Serial

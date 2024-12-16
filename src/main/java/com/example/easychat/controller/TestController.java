@@ -2,7 +2,7 @@ package com.example.easychat.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.example.easychat.annotation.MappingController;
-import com.example.easychat.service.RedisService;
+import com.example.easychat.service.impl.RedisService;
 import com.example.easychat.utils.NonStaticResourceHttpRequestHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,7 @@ public class TestController {
     private NonStaticResourceHttpRequestHandler nonStaticResourceHttpRequestHandler;
 
     @Autowired
-    private RedisService redisService;
+    private RedisService<String> redisService;
 
     @RequestMapping("hello")
     public String test() {
@@ -49,10 +49,9 @@ public class TestController {
 
     @RequestMapping("redis")
     public Object redis() {
-        redisService.setValue("k1", "hello redis");
+        redisService.set("k1", "hello redis");
         Set<Integer> rows1 = new HashSet<>();
-
-        return redisService.getValue("k1");
+        return redisService.get("k1");
     }
 
 

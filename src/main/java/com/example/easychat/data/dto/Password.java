@@ -1,19 +1,17 @@
 package com.example.easychat.data.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Register implements Serializable {
+public class Password implements Serializable {
 
-    String id;
-    String nickname;
-    String password;
-    String code;
+    private String salt;
+    private String password;
 
 }

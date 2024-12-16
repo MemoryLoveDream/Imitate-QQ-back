@@ -6,8 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serial;
 import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -24,7 +22,6 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @TableName("relationship")
-@ApiModel(value = "Relationship对象", description = "")
 public class Relationship implements Serializable {
 
     @Serial
@@ -36,14 +33,12 @@ public class Relationship implements Serializable {
     @TableField("you")
     private Integer you;
 
-    @ApiModelProperty("备注")
     @TableField("note")
     private String note;
 
     @TableField("grouping")
     private String grouping;
 
-    @ApiModelProperty("亲密度")
     @TableField("intimacy")
     private Integer intimacy;
 
