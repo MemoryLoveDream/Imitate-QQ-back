@@ -27,12 +27,12 @@ public class MessageController {
     private MessageServiceImpl messageService;
 
     @RequestMapping("new_messages/{receiverId}")
-    public Result<List<NewMessage>> newMessage(@PathVariable Integer receiverId) {
+    public Result<List<NewMessage>> newMessage(@PathVariable String receiverId) {
         return Result.depends(messageService.getNewMessages(receiverId));
     }
 
     @RequestMapping("latest_messages/{id}")
-    public Result<List<LatestMessage>> latestMessages(@PathVariable Integer id) {
+    public Result<List<LatestMessage>> latestMessages(@PathVariable String id) {
         return Result.depends(messageService.getLatestMessages(id));
     }
 

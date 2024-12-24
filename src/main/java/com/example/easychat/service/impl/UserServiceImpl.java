@@ -1,12 +1,10 @@
 package com.example.easychat.service.impl;
 
-import cn.hutool.crypto.SecureUtil;
-import com.example.easychat.data.dto.Login;
-import com.example.easychat.data.dto.Password;
-import com.example.easychat.data.dto.Register;
-import com.example.easychat.data.dto.We;
+import com.example.easychat.constants.RedisConstant;
+import com.example.easychat.data.dto.*;
 import com.example.easychat.data.entity.User;
 import com.example.easychat.data.vo.PersonalInfo;
+import com.example.easychat.enums.VerificationEnum;
 import com.example.easychat.mapper.UserMapper;
 import com.example.easychat.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -49,26 +46,38 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     private HdfsService hdfsService;
 
-    public void verify(String type, String id) {
+    public boolean verify(Verification verification) {
+        String id = verification.getId();
+        if (id.equals(userMapper.getId(id))) {
+            return false;
+        }
         String code = UUID.randomUUID().toString().substring(0,4);
-        redisService.set(id, code, 60);
-        if (type.equals("email")) {
+        Integer type = verification.getType();
+        redisService.set(RedisConstant.ID_HEAD + id, code, 300);
+        if (type.equals(VerificationEnum.EMAIL.getCode())) {
             Context context = new Context();
             context.setVariable("id", id);
             context.setVariable("code", code);
             String content = templateEngine.process("verify.html", context);
-            emailService.sendHtmlMail(id, "注册验证码", content, null);
+            return emailService.sendHtmlMail(id, "注册验证码", content, null);
         }
-        else if(type.equals("sms")) {
-            smsService.sendSms(id, code);
+        else if(type.equals(VerificationEnum.SMS.getCode())) {
+            return smsService.sendSms(id, code);
         }
+        return false;
     }
 
     public boolean register(Register register) {
-        String code = redisService.get(register.getId());
-        if (code.equals(register.getCode())) {
+        String id = register.getId();
+        if (id.equals(userMapper.getId(id))) {
+            return false;
+        }
+        String code = redisService.get(RedisConstant.ID_HEAD + id);
+        if (register.getCode().equals(code)) {
             String salt = RandomStringUtils.randomAlphanumeric(16);
+            register.setCode(salt);
             register.setPassword(PasswordUtil.encrypt(salt, register.getPassword()));
+            userMapper.savaRegister(register);
             return true;
         }
         return false;

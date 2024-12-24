@@ -9,9 +9,9 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class IS implements Serializable {
+public class Id implements Serializable {
 
+    private Integer type;
     private String id;
-    private String str;
 
 }

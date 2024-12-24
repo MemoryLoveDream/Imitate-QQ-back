@@ -18,8 +18,8 @@ import java.util.List;
  */
 public interface IMessageService extends IService<Message> {
 
-    List<LatestMessage> getLatestMessages(Integer receiverId);
+    List<LatestMessage> getLatestMessages(String receiverId);
 
-    List<NewMessage> getNewMessages(Integer receiverId);
+    List<NewMessage> getNewMessages(String receiverId);
 
 }

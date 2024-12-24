@@ -12,16 +12,15 @@ import java.util.List;
 @AllArgsConstructor
 public class GroupInfo implements Serializable {
 
-    private Integer id;
+    private String id;
     private String name;
-    private String headUrl;
     private String nickname;
     private String note;
     private Integer role;
     private String introduction;
     private String announcement;
     private Integer number;
-    private String leaderHeadUrl;
-    private List<String> memberHeadUrls;
+    private String leader;
+    private List<String> members;
 
 }

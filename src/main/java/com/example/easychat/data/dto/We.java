@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class We implements Serializable {
 
-    private Integer i;
-    private Integer you;
+    private String i;
+    private String you;
 
 }

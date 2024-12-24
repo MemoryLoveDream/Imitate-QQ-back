@@ -24,9 +24,9 @@ import java.util.List;
 public interface RelationshipMapper extends BaseMapper<Relationship> {
 
     @Select("select distinct `grouping` from relationship where i=#{id}")
-    List<String> getGroupingTypes(Integer id);
+    List<String> getGroupingTypes(String id);
 
-    List<PersonalGrouping> getPersonalGrouping(Integer id);
+    List<PersonalGrouping> getPersonalGrouping(String id);
 
     List<MemberInfo> getMemberInfo(IS is);
 

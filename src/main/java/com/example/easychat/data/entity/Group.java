@@ -28,15 +28,11 @@ public class Group implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @TableField("id")
-    @TableId(type = IdType.AUTO)
+    @TableId("id")
     private Integer id;
 
     @TableField("name")
     private String name;
-
-    @TableField("head_url")
-    private String headUrl;
 
     @TableField("introduction")
     private String introduction;

@@ -20,21 +20,14 @@ public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @TableField("id")
-    @TableId(type = IdType.AUTO)
+    @TableId("id")
     private String id;
-
-    @TableField("head_url")
-    private String headUrl;
 
     @TableField("nickname")
     private String nickname;
 
     @TableField("password")
     private String password;
-
-    @TableField("email")
-    private String email;
 
     @TableField("sex")
     private Integer sex;
@@ -59,6 +52,5 @@ public class User implements Serializable {
 
     @TableField("last_off_time")
     private LocalDateTime lastOffTime;
-
 
 }

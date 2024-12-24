@@ -26,13 +26,13 @@ public class Message implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableField("sender_id")
-    private Integer senderId;
+    private String senderId;
 
     @TableField("receiver_id")
-    private Integer receiverId;
+    private String receiverId;
 
     @TableField("group_id")
-    private Integer groupId;
+    private String groupId;
 
     @TableField("send_time")
     private LocalDateTime sendTime;

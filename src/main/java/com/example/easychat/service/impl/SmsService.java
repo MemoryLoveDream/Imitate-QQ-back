@@ -26,7 +26,7 @@ public class SmsService {
     @Value("${aliyun.sms.templateCode}")
     private String templateCode;
 
-    public SendSmsResponse sendSms(String phoneNumber, String code) {
+    public boolean sendSms(String phoneNumber, String code) {
         DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
         IAcsClient client = new DefaultAcsClient(profile);
         SendSmsRequest request = new SendSmsRequest();
@@ -35,11 +35,12 @@ public class SmsService {
         request.setTemplateCode(templateCode);
         request.setTemplateParam("{\"code\":\"" + code + "\"}");
         try {
-            return client.getAcsResponse(request);
+            client.getAcsResponse(request);
+            return true;
         } catch (ClientException e) {
             log.error("短信发送失败：{}", e.getMessage());
         }
-        return null;
+        return false;
     }
 }
 

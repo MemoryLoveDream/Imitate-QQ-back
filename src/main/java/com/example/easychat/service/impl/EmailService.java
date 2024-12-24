@@ -4,6 +4,7 @@ import jakarta.annotation.Nullable;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.angus.mail.smtp.SMTPSendFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -30,11 +31,11 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
-    public void sendHtmlMail(String sendTo, String subject, String text, @Nullable List<File> files) {
+    public boolean sendHtmlMail(String sendTo, String subject, String text, @Nullable List<File> files) {
         MimeMessage message = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setFrom("2274399174@qq.com");
+            helper.setFrom("逛逛");
             helper.setTo(sendTo);
             helper.setSubject(subject);
             helper.setText(text, true);
@@ -44,9 +45,13 @@ public class EmailService {
                 }
             }
             javaMailSender.send(message);
+            return true;
+        } catch (SMTPSendFailedException e) {
+            log.error("邮件发送失败：{}", e.getMessage());
         } catch (MessagingException e) {
             log.error("邮件发送出错：{}", e.getMessage());
         }
+        return false;
     }
 
 }

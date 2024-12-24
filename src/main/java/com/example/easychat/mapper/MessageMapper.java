@@ -22,9 +22,9 @@ import java.util.List;
 @Mapper
 public interface MessageMapper extends BaseMapper<Message> {
 
-    List<LatestMessage> getLatestMessages(Integer receiverId);
+    List<LatestMessage> getLatestMessages(String receiverId);
 
-    List<NewMessage> getNewMessages(Integer receiverId);
+    List<NewMessage> getNewMessages(String receiverId);
 
     List<Chat> getPersonChats(We we);
 

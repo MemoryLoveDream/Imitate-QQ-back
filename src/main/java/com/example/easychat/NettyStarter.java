@@ -16,7 +16,7 @@ public class NettyStarter implements ApplicationListener<ContextRefreshedEvent>{
 			try {
 				WSServer.getInstance().start();
 			} catch (Exception e) {
-				log.error(e.getMessage());
+				log.error("Netty启动失败：{}", e.getMessage());
 			}
 		}
 	}

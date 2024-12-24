@@ -28,12 +28,12 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     private MessageMapper messageMapper;
 
     @Override
-    public List<LatestMessage> getLatestMessages(Integer receiverId) {
+    public List<LatestMessage> getLatestMessages(String receiverId) {
         return messageMapper.getLatestMessages(receiverId);
     }
 
     @Override
-    public List<NewMessage> getNewMessages(Integer receiverId) {
+    public List<NewMessage> getNewMessages(String receiverId) {
         List<NewMessage> newMessages =messageMapper.getNewMessages(receiverId);
         if(newMessages != null) {
             for(NewMessage newMessage: newMessages) {

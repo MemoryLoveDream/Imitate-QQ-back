@@ -31,8 +31,8 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
     public GroupInfo getGroupInfo(We we) {
         GroupInfo groupInfo = groupMapper.getGroupInfo(we);
         if(groupInfo != null) {
-            groupInfo.setLeaderHeadUrl(groupMemberMapper.getLeaderHeadUrl(we.getYou()));
-            groupInfo.setMemberHeadUrls(groupMemberMapper.getMemberHeadUrls(we.getYou()));
+            groupInfo.setLeader(groupMemberMapper.getLeader(we.getYou()));
+            groupInfo.setMembers(groupMemberMapper.getMembers(we.getYou()));
         }
         return groupInfo;
     }

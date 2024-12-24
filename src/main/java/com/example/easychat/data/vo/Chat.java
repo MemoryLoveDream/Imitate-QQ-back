@@ -16,7 +16,7 @@ public class Chat implements Serializable {
     @TableField("chat_type")
     private Integer chatType;
     @TableField("sender_id")
-    private Integer senderId;
+    private String senderId;
     @TableField("send_time")
     private LocalDateTime sendTime;
     private String content;

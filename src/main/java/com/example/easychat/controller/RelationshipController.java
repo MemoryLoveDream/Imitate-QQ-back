@@ -28,7 +28,7 @@ public class RelationshipController {
     private RelationshipServiceImpl relationshipService;
 
     @RequestMapping("grouping/{id}")
-    public Result<List<String>> getPersonalGroupingTypes(@PathVariable Integer id) {
+    public Result<List<String>> getPersonalGroupingTypes(@PathVariable String id) {
         return Result.depends(relationshipService.getPersonalGroupingTypes(id));
     }
 
@@ -43,7 +43,7 @@ public class RelationshipController {
     }
 
     @RequestMapping("personal_grouping/{id}")
-    public Result<List<PersonalGrouping>> getPersonalGrouping(@PathVariable Integer id) {
+    public Result<List<PersonalGrouping>> getPersonalGrouping(@PathVariable String id) {
         return Result.depends(relationshipService.getPersonalGrouping(id));
     }
 

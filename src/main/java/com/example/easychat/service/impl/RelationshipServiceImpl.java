@@ -30,18 +30,22 @@ public class RelationshipServiceImpl extends ServiceImpl<RelationshipMapper, Rel
     private RelationshipMapper relationshipMapper;
 
     @Override
-    public List<String> getPersonalGroupingTypes(Integer id) {
+    public List<String> getPersonalGroupingTypes(String id) {
         return relationshipMapper.getGroupingTypes(id);
     }
 
     @Override
-    public Boolean updateNote(OneNewValue oneNewValue) { return relationshipMapper.updateNote(oneNewValue); }
+    public Boolean updateNote(OneNewValue oneNewValue) {
+        return relationshipMapper.updateNote(oneNewValue);
+    }
 
     @Override
-    public Boolean updateGrouping(OneNewValue oneNewValue) { return relationshipMapper.updateGrouping(oneNewValue); }
+    public Boolean updateGrouping(OneNewValue oneNewValue) {
+        return relationshipMapper.updateGrouping(oneNewValue);
+    }
 
     @Override
-    public List<PersonalGrouping> getPersonalGrouping(Integer id) {
+    public List<PersonalGrouping> getPersonalGrouping(String id) {
         List<PersonalGrouping> list = relationshipMapper.getPersonalGrouping(id);
         if (!list.isEmpty()) {
             for (PersonalGrouping item : list) {

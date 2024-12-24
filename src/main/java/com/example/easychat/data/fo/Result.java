@@ -51,7 +51,7 @@ public class Result<T> implements Serializable {
     }
 
     public static <T> Result<List<T>> depends(List<T> list) {
-        if (!list.isEmpty()) return Result.success(list);
+        if (list != null) return Result.success(list);
         else return Result.error(500);
     }
 

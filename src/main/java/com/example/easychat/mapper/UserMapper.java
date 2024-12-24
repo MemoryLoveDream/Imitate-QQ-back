@@ -7,6 +7,7 @@ import com.example.easychat.data.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.easychat.data.dto.Password;
 import com.example.easychat.data.vo.PersonalInfo;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -21,13 +22,14 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
-    @Select("select nickname from user where id=#{id} and password=#{password}")
-    String getNickname(Login login);
+    @Insert("insert into user(id,nickname,salt,password) values(#{id},#{nickname},#{code},#{password})")
+    void savaRegister(Register register);
 
     @Select("select salt,password from user where id=#{id}")
     Password getPassword(Login login);
 
-    void insert(Register register);
+    @Select("select id from user where id=#{id}")
+    String getId(String id);
 
     PersonalInfo getPersonalInfo(We we);
 

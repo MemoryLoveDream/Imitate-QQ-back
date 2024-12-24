@@ -17,12 +17,12 @@ import java.util.List;
  */
 public interface IRelationshipService extends IService<Relationship> {
 
-    List<String> getPersonalGroupingTypes(Integer id);
+    List<String> getPersonalGroupingTypes(String id);
 
     Boolean updateNote(OneNewValue oneNewValue);
 
     Boolean updateGrouping(OneNewValue oneNewValue);
 
-    List<PersonalGrouping> getPersonalGrouping(Integer id);
+    List<PersonalGrouping> getPersonalGrouping(String id);
 
 }

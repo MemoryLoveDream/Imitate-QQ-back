@@ -20,11 +20,11 @@ import java.util.List;
 @Mapper
 public interface GroupMemberMapper extends BaseMapper<GroupMember> {
 
-    @Select("select head_url from user,group_member where group_id=#{id} AND `role`=3 and id=member_id")
-    String getLeaderHeadUrl(Integer id);
+    @Select("select member_id from group_member where group_id=#{id} AND `role`=3")
+    String getLeader(String id);
 
-    @Select("select head_url from user,group_member where group_id=#{id} AND `role`!=3 and id=member_id")
-    List<String> getMemberHeadUrls(Integer id);
+    @Select("select member_id from group_member where group_id=#{id} AND `role`!=3")
+    List<String> getMembers(String id);
 
     @Update("update group_member set nickname=#{newValue} where group_id=#{you} and member_id={i}")
     Boolean updateNickname(OneNewValue oneNewValue);

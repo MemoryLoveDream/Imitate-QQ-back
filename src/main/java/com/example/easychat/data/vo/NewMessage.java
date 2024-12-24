@@ -15,7 +15,7 @@ public class NewMessage implements Serializable {
 
     @TableField("message_type")
     private Integer messageType;
-    private Integer id;
+    private String id;
     private Integer unread;
     private List<Chat> chats;
 

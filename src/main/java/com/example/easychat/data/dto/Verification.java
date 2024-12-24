@@ -9,9 +9,9 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class IS implements Serializable {
+public class Verification implements Serializable {
 
-    private String id;
-    private String str;
+    Integer type;
+    String id;
 
 }

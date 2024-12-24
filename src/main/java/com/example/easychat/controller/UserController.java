@@ -1,14 +1,16 @@
 package com.example.easychat.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.example.easychat.data.dto.Register;
-import com.example.easychat.data.dto.Login;
+import com.example.easychat.data.dto.*;
 import com.example.easychat.data.fo.Result;
-import com.example.easychat.data.dto.We;
 import com.example.easychat.data.vo.PersonalInfo;
 import com.example.easychat.data.vo.UserInfo;
+import com.example.easychat.enums.RelationshipEnum;
+import com.example.easychat.service.impl.AssetsServiceImpl;
 import com.example.easychat.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,9 +20,12 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    @RequestMapping("login")
-    public Result<Boolean> login(@RequestBody Login login) {
-        return Result.depends(userService.login(login));
+    @Autowired
+    private AssetsServiceImpl assetsService;
+
+    @RequestMapping("verify")
+    public Result<Integer> verify(@RequestBody Verification verification) {
+        return Result.depends(userService.verify(verification));
     }
 
     @RequestMapping("register")
@@ -28,14 +33,24 @@ public class UserController {
         return Result.depends(userService.register(register));
     }
 
+    @RequestMapping("login")
+    public Result<Boolean> login(@RequestBody Login login) {
+        return Result.depends(userService.login(login));
+    }
+
     @RequestMapping("user_info/{id}")
-    public Result<UserInfo> userInfo(@PathVariable Integer id) {
+    public Result<UserInfo> userInfo(@PathVariable String id) {
         return Result.depends(BeanUtil.copyProperties(userService.getById(id), UserInfo.class));
     }
 
     @RequestMapping("personal_info")
     public Result<PersonalInfo> personalInfo(@RequestBody We we) {
         return Result.depends(userService.getPersonalInfo(we));
+    }
+
+    @RequestMapping("avatar/{id}")
+    public ResponseEntity<InputStreamResource> head(@PathVariable String id) {
+        return assetsService.getAvatarJpg(RelationshipEnum.USER.getCode(), id);
     }
 
 }
