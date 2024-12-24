@@ -2,26 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.easychat.mapper.MessageMapper">
 
-    <select id="getLatestMessages" parameterType="java.lang.String"
-            resultType="com.example.easychat.data.vo.LatestMessage">
-        (SELECT m.sender_id, m.group_id, user.nickname, m.send_time, m.message_type, m.chat_type,
-        m.content, latest.unread FROM message m JOIN (
-            SELECT sender_id, MAX(send_time) AS max_send_time, COUNT(*) AS unread FROM message
-            WHERE receiver_id = #{receiverId} AND message_type=1 AND seen = 0 GROUP BY sender_id
-        ) AS latest JOIN user
-        ON m.sender_id = latest.sender_id AND m.send_time = latest.max_send_time AND m.sender_id = user.id
-        WHERE m.receiver_id = #{receiverId} AND message_type=1 AND seen = 0)
-        UNION ALL
-        (SELECT m.sender_id, m.group_id, `group`.`name` AS nickname, m.send_time, m.message_type,
-        m.chat_type, m.content, latest.unread FROM message m JOIN (
-            SELECT group_id, MAX(send_time) AS max_send_time, COUNT(*) AS unread FROM message
-            WHERE receiver_id = #{receiverId} AND message_type=2 AND seen = 0 GROUP BY sender_id
-        ) AS latest JOIN `group`
-        ON m.group_id = latest.group_id AND m.send_time = latest.max_send_time AND m.group_id = `group`.id
-        WHERE m.receiver_id = #{receiverId} AND message_type=2 AND seen = 0)
-        ORDER BY send_time DESC
-    </select>
-
     <select id="getNewMessages" parameterType="java.lang.String"
             resultType="com.example.easychat.data.vo.NewMessage">
         (SELECT m.message_type, m.sender_id AS id, m.send_time, latest.unread FROM message m JOIN (

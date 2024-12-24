@@ -9,10 +9,9 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class We3 implements Serializable {
+public class MemberRole implements Serializable {
 
-    private Integer i;
-    private Integer you;
-    private Integer messageType;
+    private String id;
+    private Integer role;
 
 }

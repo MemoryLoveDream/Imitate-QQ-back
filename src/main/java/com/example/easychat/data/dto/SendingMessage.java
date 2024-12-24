@@ -1,29 +1,27 @@
-package com.example.easychat.data.entity;
+package com.example.easychat.data.dto;
 
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.*;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author wy
  * @since 2024-09-22
  */
-@Getter
-@Setter
-@TableName("message")
-public class Message implements Serializable {
+@Data
+@AllArgsConstructor
+public class SendingMessage implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
+    @TableField("message_type")
+    private Integer messageType;
 
     @TableField("sender_id")
     private String senderId;
@@ -35,19 +33,16 @@ public class Message implements Serializable {
     private String groupId;
 
     @TableField("send_time")
+    @JSONField(format = "yyyy-MM-ddTHH:mm:ss")
     private LocalDateTime sendTime;
-
-    @TableField("message_type")
-    private Integer messageType;
 
     @TableField("chat_type")
     private Integer chatType;
 
-    @TableField("content")
     private String content;
 
-    @TableField("seen")
-    private Integer seen;
-
+    public void setSendingMessage() {
+        sendTime = LocalDateTime.now();
+    }
 
 }

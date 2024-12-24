@@ -9,10 +9,9 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OneNewValue implements Serializable {
+public class FriendGroupingType implements Serializable {
 
-    private Integer i;
-    private Integer you;
-    private String newValue;
+    private String id;
+    private String type;
 
 }

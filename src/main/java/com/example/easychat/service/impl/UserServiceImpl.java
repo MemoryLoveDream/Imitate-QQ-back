@@ -3,7 +3,7 @@ package com.example.easychat.service.impl;
 import com.example.easychat.constants.RedisConstant;
 import com.example.easychat.data.dto.*;
 import com.example.easychat.data.entity.User;
-import com.example.easychat.data.vo.PersonalInfo;
+import com.example.easychat.data.vo.FriendInfo;
 import com.example.easychat.enums.VerificationEnum;
 import com.example.easychat.mapper.UserMapper;
 import com.example.easychat.service.IUserService;
@@ -42,9 +42,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     private TemplateEngine templateEngine;
-
-    @Autowired
-    private HdfsService hdfsService;
 
     public boolean verify(Verification verification) {
         String id = verification.getId();
@@ -91,10 +88,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     public boolean destroy(Login login) {
         return true;
-    }
-
-    public PersonalInfo getPersonalInfo(We we) {
-        return userMapper.getPersonalInfo(we);
     }
 
 }

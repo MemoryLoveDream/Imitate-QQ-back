@@ -6,7 +6,7 @@ import com.example.easychat.data.dto.We;
 import com.example.easychat.data.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.easychat.data.dto.Password;
-import com.example.easychat.data.vo.PersonalInfo;
+import com.example.easychat.data.vo.FriendInfo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -30,7 +30,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select id from user where id=#{id}")
     String getId(String id);
-
-    PersonalInfo getPersonalInfo(We we);
 
 }

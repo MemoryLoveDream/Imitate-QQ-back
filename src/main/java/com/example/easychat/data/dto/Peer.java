@@ -9,9 +9,9 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Id implements Serializable {
+public class Peer implements Serializable {
 
-    private Integer relationType;
-    private String id;
+    private String callerId;
+    private String peerId;
 
 }

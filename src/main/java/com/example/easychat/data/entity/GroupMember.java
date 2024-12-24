@@ -1,6 +1,7 @@
 package com.example.easychat.data.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serial;
@@ -27,10 +28,10 @@ public class GroupMember implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableField("group_id")
-    private Integer groupId;
+    private String groupId;
 
     @TableField("member_id")
-    private Integer memberId;
+    private String memberId;
 
     @TableField("nickname")
     private String nickname;

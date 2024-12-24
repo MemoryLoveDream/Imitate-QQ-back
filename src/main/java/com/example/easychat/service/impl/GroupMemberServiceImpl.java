@@ -1,6 +1,6 @@
 package com.example.easychat.service.impl;
 
-import com.example.easychat.data.dto.OneNewValue;
+import com.example.easychat.data.dto.Modification;
 import com.example.easychat.data.entity.GroupMember;
 import com.example.easychat.mapper.GroupMemberMapper;
 import com.example.easychat.service.IGroupMemberService;
@@ -24,12 +24,12 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
     private GroupMemberMapper groupMemberMapper;
 
     @Override
-    public Boolean updateNickname(OneNewValue oneNewValue) {
-        return groupMemberMapper.updateNickname(oneNewValue);
+    public Boolean updateNickname(Modification modification) {
+        return groupMemberMapper.updateNickname(modification);
     }
 
     @Override
-    public Boolean updateNote(OneNewValue oneNewValue) {
-        return groupMemberMapper.updateNote(oneNewValue);
+    public Boolean updateNote(Modification modification) {
+        return groupMemberMapper.updateNote(modification);
     }
 }

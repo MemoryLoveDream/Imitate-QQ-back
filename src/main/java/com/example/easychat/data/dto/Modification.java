@@ -9,9 +9,10 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class IS implements Serializable {
+public class Modification implements Serializable {
 
-    private String id;
-    private String str;
+    private String i;
+    private String you;
+    private String newValue;
 
 }

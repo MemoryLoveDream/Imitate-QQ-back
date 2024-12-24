@@ -21,17 +21,16 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-@TableName("relationship")
-public class Relationship implements Serializable {
+@TableName("friend")
+public class Friend implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @TableField("i")
-    private Integer i;
+    @TableId
+    private String i;
 
-    @TableField("you")
-    private Integer you;
+    private String you;
 
     @TableField("note")
     private String note;

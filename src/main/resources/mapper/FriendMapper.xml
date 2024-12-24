@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.easychat.mapper.FriendMapper">
+
+    <select id="getFriendInfo" parameterType="com.example.easychat.data.dto.We"
+            resultType="com.example.easychat.data.vo.FriendInfo">
+        select u.id,u.nickname,u.sex,u.signature,u.country,u.location,u.status,
+               r.note as note,r.`grouping` as `grouping`
+        from user u,friend r
+        where u.id = r.you and r.i = #{i} and r.you = #{you}
+    </select>
+    
+    <select id="listFriendGrouping" parameterType="java.lang.String"
+            resultType="com.example.easychat.data.vo.FriendGrouping">
+        SELECT a.`grouping` AS `name`,IFNULL(b.online_number,0) as online_number,a.`number` FROM
+        (SELECT r.`grouping`,COUNT(*) AS `number` FROM friend r where i=#{id} group BY `grouping`) AS a
+        LEFT JOIN
+        (SELECT `grouping`,COUNT(`status`) AS online_number FROM friend,user WHERE `status`=1 and i=#{id}
+         AND you=id group BY `grouping`) AS b ON a.`grouping`=b.`grouping`
+    </select>
+
+
+    <select id="getMemberInfo" parameterType="com.example.easychat.data.dto.FriendGroupingType"
+            resultType="com.example.easychat.data.vo.FriendGroupingMember">
+        SELECT 1 AS `relationshipType`,id,nickname,note,signature FROM friend,user
+        WHERE `grouping`=#{type} AND i=#{id} AND you=id
+    </select>
+
+</mapper>

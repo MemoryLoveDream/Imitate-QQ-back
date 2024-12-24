@@ -85,21 +85,21 @@ INSERT INTO `message` (`message_type`, `sender_id`, `receiver_id`, `group_id`, `
 	(2, 1000000000, 1000000004, 1000000000, '2024-10-03 15:56:00', 1, '朋友们，都在吗？', 0),
 	(2, 1000000000, 1000000005, 1000000000, '2024-10-03 15:56:00', 1, '朋友们，都在吗？', 0);
 
--- 导出  表 easychat.relationship 结构
-CREATE TABLE IF NOT EXISTS `relationship` (
+-- 导出  表 easychat.friend 结构
+CREATE TABLE IF NOT EXISTS `friend` (
   `i` int NOT NULL,
   `you` int NOT NULL,
   `note` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '备注',
-  `grouping` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `friendGroupingType` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   `intimacy` tinyint NOT NULL DEFAULT '0' COMMENT '亲密度',
-  KEY `FK_relationship_user_2` (`you`),
-  KEY `FK_relationship_user` (`i`) USING BTREE,
-  CONSTRAINT `FK_relationship_user` FOREIGN KEY (`i`) REFERENCES `user` (`id`),
-  CONSTRAINT `FK_relationship_user_2` FOREIGN KEY (`you`) REFERENCES `user` (`id`)
+  KEY `FK_friend_user_2` (`you`),
+  KEY `FK_friend_user` (`i`) USING BTREE,
+  CONSTRAINT `FK_friend_user` FOREIGN KEY (`i`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK_friend_user_2` FOREIGN KEY (`you`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 正在导出表  easychat.relationship 的数据：~12 rows (大约)
-INSERT INTO `relationship` (`i`, `you`, `note`, `grouping`, `intimacy`) VALUES
+-- 正在导出表  easychat.friend 的数据：~12 rows (大约)
+INSERT INTO `friend` (`i`, `you`, `note`, `friendGroupingType`, `intimacy`) VALUES
 	(1000000001, 1000000002, '', '朋友', 1),
 	(1000000000, 1000000001, '卷王熊', '元老', 1),
 	(1000000000, 1000000002, '小萌', '元老', 1),

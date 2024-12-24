@@ -9,9 +9,9 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Id implements Serializable {
+public class WebSocketSignal implements Serializable {
 
-    private Integer relationType;
-    private String id;
+    private Integer signalType;
+    private String content;
 
 }

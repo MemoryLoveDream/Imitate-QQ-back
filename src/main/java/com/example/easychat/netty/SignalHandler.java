@@ -3,7 +3,12 @@ package com.example.easychat.netty;
 import java.util.HashMap;
 import java.util.Objects;
 
-import com.example.easychat.utils.JsonUtil;
+import com.alibaba.fastjson2.JSON;
+import com.example.easychat.data.dto.Call;
+import com.example.easychat.data.dto.Peer;
+import com.example.easychat.data.dto.SendingMessage;
+import com.example.easychat.data.dto.WebSocketSignal;
+import com.example.easychat.enums.SignalEnum;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -18,45 +23,51 @@ public class SignalHandler extends SimpleChannelInboundHandler<TextWebSocketFram
 
     public static ChannelGroup users = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
-    public static HashMap<Integer, Channel> manager = new HashMap<>();
+    public static HashMap<String, Channel> manager = new HashMap<>();
+
+
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
         String signal = msg.text();
         log.info(signal);
-        WebSocketSignal webSocketSignal = JsonUtil.jsonToObject(signal, WebSocketSignal.class);
+        WebSocketSignal webSocketSignal = JSON.parseObject(signal, WebSocketSignal.class);
+                //JsonUtil.jsonToObject(signal, WebSocketSignal.class);
 
         if (webSocketSignal != null ) {
             Integer signalType = webSocketSignal.getSignalType();
             String content = webSocketSignal.getContent();
 
-            if (Objects.equals(signalType, WebSocketSignal.FIRST_CONNECTION)) {
-                manager.put(Integer.parseInt(content), ctx.channel());
-                log.info(content);
+            if (signalType.equals(SignalEnum.CONNECTION.getCode())) {
+                manager.put(content, ctx.channel());
             }
-            else if(Objects.equals(signalType, WebSocketSignal.SEND_CHAT)) {
-                log.info(content);
-                WebSocketSignal.Chat chat = JsonUtil.jsonToObject(content, WebSocketSignal.Chat.class);
-                if (chat != null) {
-                    if(manager.containsKey(chat.getReceiverId())) {
-                        manager.get(chat.getReceiverId()).writeAndFlush(new TextWebSocketFrame(signal));
-                    }
+            else if(signalType.equals(SignalEnum.DISCONNECTION.getCode())) {
+                manager.remove(content);
+            }
 
+            else if(signalType.equals(SignalEnum.MESSAGE.getCode())) {
+                log.info(content);
+                SendingMessage message = JSON.parseObject(content, SendingMessage.class);
+                        //JsonUtil.jsonToObject(content, WebSocketSignal.Chat.class);
+                message.setSendingMessage();
+                if(manager.containsKey(message.getReceiverId())) {
+                    manager.get(message.getReceiverId()).writeAndFlush(new TextWebSocketFrame(signal));
                 }
             }
-            else if(Objects.equals(signalType, WebSocketSignal.DISCONNECTION)) {
-                manager.remove(Integer.parseInt(content));
-            }
-            else if(Objects.equals(signalType, WebSocketSignal.REQUEST_PEER_ID)) {
+
+            else if(signalType.equals(SignalEnum.PEER_ID_REQUEST.getCode())) {
                 log.info(content);
-                WebSocketSignal.Call call = JsonUtil.jsonToObject(content, WebSocketSignal.Call.class);
+                Call call = JSON.parseObject(content, Call.class);
+                        //JsonUtil.jsonToObject(content, WebSocketSignal.Call.class);
                 if (call != null) {
                     manager.get(call.getCalleeId()).writeAndFlush(new TextWebSocketFrame(signal));
                 }
             }
-            else if(Objects.equals(signalType, WebSocketSignal.SEND_PEER_ID)) {
+
+            else if(signalType.equals(SignalEnum.PEER_ID_SENDING.getCode())) {
                 log.info(content);
-                WebSocketSignal.Peer peer = JsonUtil.jsonToObject(content, WebSocketSignal.Peer.class);
+                Peer peer = JSON.parseObject(content, Peer.class);
+                        //JsonUtil.jsonToObject(content, WebSocketSignal.Peer.class);
                 if (peer != null) {
                     manager.get(peer.getCallerId()).writeAndFlush(new TextWebSocketFrame(signal));
                 }

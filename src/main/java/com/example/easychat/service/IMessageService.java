@@ -1,9 +1,7 @@
 package com.example.easychat.service;
 
-import com.example.easychat.data.dto.We3;
 import com.example.easychat.data.entity.Message;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.easychat.data.vo.LatestMessage;
 import com.example.easychat.data.vo.NewMessage;
 
 import java.util.List;
@@ -17,8 +15,6 @@ import java.util.List;
  * @since 2024-09-22
  */
 public interface IMessageService extends IService<Message> {
-
-    List<LatestMessage> getLatestMessages(String receiverId);
 
     List<NewMessage> getNewMessages(String receiverId);
 

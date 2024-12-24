@@ -6,17 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberInfo implements Serializable {
+public class FriendGrouping implements Serializable {
 
-    private Integer type;
-    private Integer id;
-    private String nickname;
-    @TableField("head_url")
-    private String headUrl;
-    private String signature;
+    private String name;
+    @TableField("online_number")
+    private Integer onlineNumber;
+    private Integer number;
+    private List<FriendGroupingMember> members;
 
 }

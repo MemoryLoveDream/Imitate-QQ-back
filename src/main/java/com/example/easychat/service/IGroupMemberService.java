@@ -1,6 +1,6 @@
 package com.example.easychat.service;
 
-import com.example.easychat.data.dto.OneNewValue;
+import com.example.easychat.data.dto.Modification;
 import com.example.easychat.data.entity.GroupMember;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -14,8 +14,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IGroupMemberService extends IService<GroupMember> {
 
-    Boolean updateNickname(OneNewValue oneNewValue);
+    Boolean updateNickname(Modification modification);
 
-    Boolean updateNote(OneNewValue oneNewValue);
+    Boolean updateNote(Modification modification);
 
 }

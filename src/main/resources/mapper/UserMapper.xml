@@ -9,12 +9,4 @@
 <!--        </selectKey>-->
 <!--    </insert>-->
 
-    <select id="getPersonalInfo" parameterType="com.example.easychat.data.dto.We"
-            resultType="com.example.easychat.data.vo.PersonalInfo">
-        select u.id,u.nickname,u.sex,u.signature,u.country,u.location,u.status,
-               r.note as note,r.`grouping` as `grouping`
-        from user u,relationship r
-        where u.id = r.you and r.i = #{i} and r.you = #{you}
-    </select>
-
 </mapper>

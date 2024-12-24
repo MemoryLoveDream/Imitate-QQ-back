@@ -1,6 +1,6 @@
 package com.example.easychat.controller;
 
-import com.example.easychat.data.dto.OneNewValue;
+import com.example.easychat.data.dto.Modification;
 import com.example.easychat.data.fo.Result;
 import com.example.easychat.service.impl.GroupMemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,13 @@ public class GroupMemberController {
     private GroupMemberServiceImpl groupMemberService;
 
     @RequestMapping("update_note")
-    public Result<Boolean> updateNote(@RequestBody OneNewValue oneNewValue) {
-        return Result.depends(groupMemberService.updateNote(oneNewValue));
+    public Result<Boolean> updateNote(@RequestBody Modification modification) {
+        return Result.depends(groupMemberService.updateNote(modification));
     }
 
     @RequestMapping("update_nickname")
-    public Result<Boolean> updateNickname(@RequestBody OneNewValue oneNewValue) {
-        return Result.depends(groupMemberService.updateNickname(oneNewValue));
+    public Result<Boolean> updateNickname(@RequestBody Modification modification) {
+        return Result.depends(groupMemberService.updateNickname(modification));
     }
 
 }

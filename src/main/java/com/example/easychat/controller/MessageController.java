@@ -1,13 +1,15 @@
 package com.example.easychat.controller;
 
 import com.example.easychat.data.fo.Result;
-import com.example.easychat.data.vo.LatestMessage;
 import com.example.easychat.data.vo.NewMessage;
 import com.example.easychat.service.impl.MessageServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ import java.util.List;
  * @author wy
  * @since 2024-08-03
  */
+@Slf4j
 @RestController
 @RequestMapping("message")
 public class MessageController {
@@ -26,14 +29,15 @@ public class MessageController {
     @Autowired
     private MessageServiceImpl messageService;
 
-    @RequestMapping("new_messages/{receiverId}")
+    @RequestMapping("new/{receiverId}")
     public Result<List<NewMessage>> newMessage(@PathVariable String receiverId) {
         return Result.depends(messageService.getNewMessages(receiverId));
     }
 
-    @RequestMapping("latest_messages/{id}")
-    public Result<List<LatestMessage>> latestMessages(@PathVariable String id) {
-        return Result.depends(messageService.getLatestMessages(id));
-    }
+//    @RequestMapping("upload_chat")
+//    public Result<Boolean> chat(MultipartFile file, Integer type, String senderId, String receiverId,
+//                                String date) {
+//        return Result.depends(assetsService.saveChatFile(file, type, receiverId, senderId, date));
+//    }
 
 }

@@ -1,11 +1,9 @@
 package com.example.easychat.mapper;
 
 import com.example.easychat.data.dto.We;
-import com.example.easychat.data.dto.We3;
 import com.example.easychat.data.entity.Message;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.easychat.data.vo.Chat;
-import com.example.easychat.data.vo.LatestMessage;
 import com.example.easychat.data.vo.NewMessage;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,8 +19,6 @@ import java.util.List;
  */
 @Mapper
 public interface MessageMapper extends BaseMapper<Message> {
-
-    List<LatestMessage> getLatestMessages(String receiverId);
 
     List<NewMessage> getNewMessages(String receiverId);
 

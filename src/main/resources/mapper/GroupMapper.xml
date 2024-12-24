@@ -19,4 +19,17 @@
         WHERE id=#{you} AND member_id=#{i} AND group_id=id
     </select>
 
+    <select id="listGroupGrouping" parameterType="com.example.easychat.data.dto.MemberRole"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM `group`,group_member
+        WHERE group_id=id AND member_id=#{id} AND `role`=#{role}
+    </select>
+
+    <select id="getMemberInfo" parameterType="com.example.easychat.data.dto.MemberRole"
+            resultType="com.example.easychat.data.vo.GroupGroupingMember">
+        SELECT 2 AS relationshipType,id,`name`,note FROM `group`,group_member
+        WHERE group_id=id AND member_id=#{id} AND `role`=#{role}
+    </select>
+
+
 </mapper>

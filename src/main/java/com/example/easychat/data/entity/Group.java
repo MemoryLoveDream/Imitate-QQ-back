@@ -29,7 +29,7 @@ public class Group implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId("id")
-    private Integer id;
+    private String id;
 
     @TableField("name")
     private String name;

@@ -1,9 +1,8 @@
 package com.example.easychat.service.impl;
 
+import com.example.easychat.data.dto.SendingMessage;
 import com.example.easychat.data.dto.We;
-import com.example.easychat.data.dto.We3;
 import com.example.easychat.data.entity.Message;
-import com.example.easychat.data.vo.LatestMessage;
 import com.example.easychat.data.vo.NewMessage;
 import com.example.easychat.mapper.MessageMapper;
 import com.example.easychat.service.IMessageService;
@@ -28,11 +27,6 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     private MessageMapper messageMapper;
 
     @Override
-    public List<LatestMessage> getLatestMessages(String receiverId) {
-        return messageMapper.getLatestMessages(receiverId);
-    }
-
-    @Override
     public List<NewMessage> getNewMessages(String receiverId) {
         List<NewMessage> newMessages =messageMapper.getNewMessages(receiverId);
         if(newMessages != null) {
@@ -43,6 +37,10 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
             }
         }
         return newMessages;
+    }
+
+    public void addMessage(SendingMessage message) {
+        //messageMapper.insert(message);
     }
 
 }
